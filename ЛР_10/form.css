@@ -1,0 +1,40 @@
+.bodiv {
+        font-family: Arial, sans-serif;
+    }
+
+    .h2 {
+        text-align:center;
+        color:#003366;
+    }
+
+    .form-container {
+        width:420px;
+        margin:20px auto;
+    }
+
+    .table {
+        width:100%;
+    }
+
+    .td {
+        padding:6px;
+        vertical-align:top;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select{
+        width:100%;
+        padding:4px;
+    }
+
+    .textarea {
+        height:60px;
+    }
+
+    .buttons {
+        text-align:center;
+        margin-top:10px;
+    }

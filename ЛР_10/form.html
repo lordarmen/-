@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Форма регистрации</title>
+        <link rel="stylesheet" href="form.css">
+    </head>
+    <body class="bodiv">
+        <h3 class="h2">ЗАДАНИЕ</h3>
+        <p class="h2">Создайте форму</p>
+        <div class="form-container">
+            <h2>Форма регистрации</h2>
+            <form>
+                <table>
+
+                    <tr>
+                        <td>Имя</td>
+                        <td><input type="text" name="name"></td>
+                    </tr>
+
+                    <tr>
+                        <td>e-mail</td>
+                        <td><input type="email" name="email"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Пароль</td>
+                        <td><input type="password" name="password"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Повтор пароля</td>
+                        <td><input type="password" name="repeat_password"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Пол</td>
+                        <td>
+                            <label><input type="radio" name="gender"> мужской</label>
+                            <label><input type="radio" name="gender"> вертолёт</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Увлечения</td>
+                        <td>
+                            <select multiple size="6">
+                                <option>компьютеры</option>
+                                <option>спорт</option>
+                                <option>игры</option>
+                                <option>животные</option>
+                                <option>автомобили</option>
+                                <option>клубы</option>
+                                <option>музыка</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Ваши пожелания</td>
+                        <td>
+                            <textarea></textarea>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="buttons">
+                    <input type="submit" value="Отправить">
+                    <input type="reset" value="Очистить">
+                </div>
+            </form>
+        </div>
+    </body>
+    </html>
