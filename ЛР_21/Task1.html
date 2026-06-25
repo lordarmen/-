@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чётное или нечётное</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;}
+        .container {
+            background: white;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;}
+        h1 {
+            color: #333;
+            margin-bottom: 20px;}
+        input {
+            width: 80%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;}
+        input:focus {
+            outline: none;
+            border-color: #667eea;}
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;}
+        button:hover {
+            transform: scale(1.05);}
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;}
+        .even {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;}
+        .odd {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;}
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Чётное или нечётное?</h1>
+        <input type="number" id="numberInput" placeholder="Введите число">
+        <button id="checkBtn">Проверить</button>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        let button = document.querySelector("#checkBtn");
+        let numberInput = document.querySelector("#numberInput");
+        let resultDiv = document.querySelector("#result");        
+        button.onclick = function() {
+            let inputValue = numberInput.value;
+            if (inputValue === "") {
+                resultDiv.textContent = "❌ Введите число!";
+                resultDiv.className = "result error";
+                return;}
+            let number = Number(inputValue);
+            if (isNaN(number)) {
+                resultDiv.textContent = "❌ Пожалуйста, введите корректное число!";
+                resultDiv.className = "result error";
+                return;}
+            if (number % 2 === 0) {
+                resultDiv.textContent = `✅ Число ${number} - чётное!`;
+                resultDiv.className = "result even";
+            } else {
+                resultDiv.textContent = `✅ Число ${number} - нечётное!`;
+                resultDiv.className = "result odd";}};
+    </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор чаевых</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;}
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);}
+        h1 {
+            text-align: center;
+            color: #333;}
+        .form-group {
+            margin-bottom: 20px;}
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;}
+        input {
+            width: 95%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;}
+        input:focus {
+            outline: none;
+            border-color: #667eea;}
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;}
+        button:hover {
+            transform: scale(1.02);}
+        .result-card {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;}
+        .result-item {
+            padding: 10px;
+            margin: 8px 0;
+            background-color: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;}
+        .result-item strong {
+            color: #667eea;}
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Калькулятор чаевых</h1>
+        <div class="form-group">
+            <label>💰 Сумма счёта (руб):</label>
+            <input type="number" id="billInput" placeholder="Например: 1000">
+        </div>
+        <div class="form-group">
+            <label>🎯 Процент чаевых (0-50):</label>
+            <input type="number" id="tipPercentInput" placeholder="Например: 15">
+        </div>
+        <div class="form-group">
+            <label>👥 Количество человек:</label>
+            <input type="number" id="peopleInput" value="1" placeholder="1">
+        </div>
+        <button id="calcBtn">Рассчитать</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        let calcBtn = document.querySelector("#calcBtn");
+        let billInput = document.querySelector("#billInput");
+        let tipPercentInput = document.querySelector("#tipPercentInput");
+        let peopleInput = document.querySelector("#peopleInput");
+        let resultsDiv = document.querySelector("#results");
+        function validateInputs(bill, tipPercent, people) {
+            if (isNaN(bill) || bill === "") {
+                return "Сумма счёта не может быть пустой!";}
+            if (bill < 0) {
+                return "Сумма счёта не может быть отрицательной!";}
+            if (isNaN(tipPercent) || tipPercent === "") {
+                return "Введите процент чаевых!";}
+            if (tipPercent < 0) {
+                return "Процент чаевых не может быть отрицательным!";}
+            if (tipPercent > 50) {
+                return "Процент чаевых не может превышать 50%!";}
+            if (isNaN(people) || people === "") {
+                return "Введите количество человек!";}
+            if (people < 1) {
+                return "Количество человек должно быть не менее 1!";}
+            return null;}
+        calcBtn.onclick = function() {
+            let bill = Number(billInput.value);
+            let tipPercent = Number(tipPercentInput.value);
+            let people = Number(peopleInput.value);
+            let error = validateInputs(bill, tipPercent, people);
+            if (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ ${error}</div>`;
+                return;}
+            let tipAmount = bill * tipPercent / 100;
+            let totalAmount = bill + tipAmount;
+            let perPerson = totalAmount / people;
+            perPerson = Math.round(perPerson * 100) / 100;
+            resultsDiv.innerHTML = `
+                <div class="result-card">
+                    <div class="result-item">
+                        💵 <strong>Сумма чаевых:</strong> ${tipAmount.toFixed(2)} рублей
+                    </div>
+                    <div class="result-item">
+                        🧾 <strong>Общая сумма:</strong> ${totalAmount.toFixed(2)} рублей
+                    </div>
+                    <div class="result-item">
+                        👥 <strong>Каждый должен заплатить:</strong> ${perPerson.toFixed(2)} рублей 
+                        ${people > 1 ? `(${people} человека)` : ""}
+                    </div>
+                </div>`;};
+    </script>
+</body>
+</html>

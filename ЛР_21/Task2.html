@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор скидки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;}
+        .container {
+            background: white;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);}
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;}
+        .form-group {
+            margin-bottom: 20px;}
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;}
+        input {
+            width: 95%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;}
+        input:focus {
+            outline: none;
+            border-color: #f5576c;}
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;}
+        button:hover {
+            transform: scale(1.02);}
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;}
+        .discount-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;}
+        .success {
+            background-color: #d4edda;
+            color: #155724;}
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Калькулятор скидки</h1>
+        <div class="form-group">
+            <label>💰 Стоимость товара (руб):</label>
+            <input type="number" id="priceInput" placeholder="Например: 1000">
+        </div>
+        <div class="form-group">
+            <label>👤 Возраст покупателя:</label>
+            <input type="number" id="ageInput" placeholder="Например: 25">
+        </div>
+        <button id="calcBtn">Рассчитать скидку</button>
+        <div id="result" class="result"></div>
+        <div id="discountInfo" class="discount-info"></div>
+    </div>    
+    <script>
+        let calcBtn = document.querySelector("#calcBtn");
+        let priceInput = document.querySelector("#priceInput");
+        let ageInput = document.querySelector("#ageInput");
+        let resultDiv = document.querySelector("#result");
+        let discountInfoDiv = document.querySelector("#discountInfo");
+        function calculateDiscount(age) {
+            if (age < 18) {
+                return { percent: 10, text: "детская скидка 10%" };
+            } else if (age >= 60) {
+                return { percent: 20, text: "пенсионная скидка 20%" };
+            } else {
+                return { percent: 0, text: "скидка не предоставляется" };}}
+        calcBtn.onclick = function() {
+            let price = priceInput.value;
+            let age = ageInput.value;
+            if (price === "" || age === "") {
+                resultDiv.textContent = "❌ Ошибка: Заполните все поля!";
+                resultDiv.className = "result error";
+                discountInfoDiv.textContent = "";
+                return;}
+            let priceNum = Number(price);
+            let ageNum = Number(age);
+            if (isNaN(priceNum) || isNaN(ageNum)) {
+                resultDiv.textContent = "❌ Ошибка: Введите корректные числа!";
+                resultDiv.className = "result error";
+                discountInfoDiv.textContent = "";
+                return;}
+            if (priceNum < 0) {
+                resultDiv.textContent = "❌ Ошибка: Цена не может быть отрицательной!";
+                resultDiv.className = "result error";
+                discountInfoDiv.textContent = "";
+                return;}
+            if (ageNum < 0) {
+                resultDiv.textContent = "❌ Ошибка: Возраст не может быть отрицательным!";
+                resultDiv.className = "result error";
+                discountInfoDiv.textContent = "";
+                return;}
+            let discount = calculateDiscount(ageNum);
+            let discountAmount = priceNum * discount.percent / 100;
+            let finalPrice = priceNum - discountAmount;
+            resultDiv.innerHTML = `🎉 Итоговая цена: <strong>${finalPrice} рублей</strong>`;
+            resultDiv.className = "result success";
+            discountInfoDiv.innerHTML = `
+                📊 Исходная цена: ${priceNum} руб.<br>
+                🏷️ Скидка: ${discount.percent}% (${discount.text})<br>
+                💰 Экономия: ${discountAmount} руб.`;};
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка номера телефона</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;}
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);}
+        h1 {
+            text-align: center;
+            color: #333;}
+        .format-examples {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            font-family: monospace;}
+        .format-examples p {
+            margin: 5px 0;}
+        input {
+            width: 95%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;}
+        input:focus {
+            outline: none;
+            border-color: #4facfe;}
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;}
+        button:hover {
+            transform: scale(1.02);}
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;}
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;}
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📞 Проверка номера телефона</h1>
+        <div class="format-examples">
+            <p><strong>✅ Допустимые форматы:</strong></p>
+            <p>• +7XXXXXXXXXX (12 символов, например: +79161234567)</p>
+            <p>• 8XXXXXXXXXX (11 символов, например: 89161234567)</p>
+            <p>• XXXXXXXXXX (10 цифр, например: 9161234567)</p>
+        </div>
+        <input type="tel" id="phoneInput" placeholder="Введите номер телефона">
+        <button id="checkBtn">Проверить номер</button>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        let checkBtn = document.querySelector("#checkBtn");
+        let phoneInput = document.querySelector("#phoneInput");
+        let resultDiv = document.querySelector("#result");
+        function isValidPhone(phone) {
+            if (phone === "") {
+                return { valid: false, message: "Номер телефона не может быть пустым!" };}
+            let originalPhone = phone;
+            let cleanedNumber = phone;
+            if (cleanedNumber[0] === "+") {
+                cleanedNumber = cleanedNumber.slice(1);}
+            if (cleanedNumber.length !== 10 && cleanedNumber.length !== 11) {
+                if (originalPhone[0] === "+") {
+                    return { valid: false, message: "Некорректная длина. Формат: +7XXXXXXXXXX (12 символов)" };
+                } else {
+                    return { valid: false, message: "Некорректная длина. Номер должен содержать 10 или 11 цифр" };}}
+            for (let i = 0; i < cleanedNumber.length; i++) {
+                let char = cleanedNumber[i];
+                if (char < "0" || char > "9") {
+                    return { valid: false, message: "Номер может содержать только цифры и знак + в начале!" };}}
+            if (cleanedNumber.length === 11) {
+                let firstDigit = cleanedNumber[0];
+                if (firstDigit !== "7" && firstDigit !== "8") {
+                    return { valid: false, message: "11-значный номер должен начинаться с 7 или 8" };}}
+            return { valid: true, message: "Номер телефона верный!" };}
+        checkBtn.onclick = function() {
+            let phone = phoneInput.value.trim();
+            let result = isValidPhone(phone);
+            resultDiv.textContent = result.message;
+            if (result.valid) {
+                resultDiv.className = "result success";
+                resultDiv.style.fontWeight = "bold";
+            } else {
+                resultDiv.className = "result error";}};
+    </script>
+</body>
+</html>

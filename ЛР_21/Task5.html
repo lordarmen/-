@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор ИМТ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;}
+        .container {
+            background: white;
+            max-width: 550px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);}
+        h1 {
+            text-align: center;
+            color: #333;}
+        .form-group {
+            margin-bottom: 20px;}
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;}
+        input {
+            width: 95%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;}
+        input:focus {
+            outline: none;
+            border-color: #2a5298;}
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;
+            font-weight: bold;}
+        button:hover {
+            transform: scale(1.02);}
+        .result-card {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+            text-align: center;}
+        .result-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;}
+        .result-comment {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;}
+        .result-recommendation {
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;}
+        .bmi-scale {
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;}
+        .scale-bar {
+            height: 8px;
+            background: linear-gradient(to right, #ff4444, #ffaa44, #44ff44, #ffaa44, #ff4444);
+            border-radius: 4px;
+            margin: 10px 0;
+            position: relative;}
+        .scale-marker {
+            width: 4px;
+            height: 16px;
+            background-color: #333;
+            position: relative;
+            top: -4px;
+            border-radius: 2px;}
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;}
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #666;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚖️ Калькулятор ИМТ</h1>
+        <div class="form-group">
+            <label>📏 Рост (см):</label>
+            <input type="number" id="heightInput" placeholder="Например: 175">
+        </div>
+        <div class="form-group">
+            <label>⚖️ Вес (кг):</label>
+            <input type="number" id="weightInput" placeholder="Например: 70">
+        </div>
+        <button id="calcBtn">Рассчитать ИМТ</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        let calcBtn = document.querySelector("#calcBtn");
+        let heightInput = document.querySelector("#heightInput");
+        let weightInput = document.querySelector("#weightInput");
+        let resultsDiv = document.querySelector("#results");
+        function getBMICategory(bmi) {
+            if (bmi < 16) {
+                return {
+                    comment: "Выраженный дефицит массы тела",
+                    color: "#ff4444",
+                    bgColor: "#ffebee",
+                    recommendation: "⚠️ Рекомендуется срочно обратиться к врачу и наладить питание с повышенной калорийностью"};
+            } else if (bmi < 18.5) {
+                return {
+                    comment: "Недостаточная масса тела",
+                    color: "#ffaa44",
+                    bgColor: "#fff8e1",
+                    recommendation: "🍎 Рекомендуется сбалансированное питание с повышенной калорийностью"};
+            } else if (bmi < 25) {
+                return {
+                    comment: "Нормальная масса тела",
+                    color: "#44ff44",
+                    bgColor: "#e8f5e9",
+                    recommendation: "🎉 Отличный результат! Поддерживайте здоровый образ жизни"};
+            } else if (bmi < 30) {
+                return {
+                    comment: "Избыточная масса тела (предожирение)",
+                    color: "#ffaa44",
+                    bgColor: "#fff8e1",
+                    recommendation: "🏃 Рекомендуется увеличить физическую активность и скорректировать питание"};
+            } else if (bmi < 35) {
+                return {
+                    comment: "Ожирение I степени",
+                    color: "#ff4444",
+                    bgColor: "#ffebee",
+                    recommendation: "👨‍⚕️ Рекомендуется консультация врача-диетолога и постепенное снижение веса"};
+            } else if (bmi < 40) {
+                return {
+                    comment: "Ожирение II степени",
+                    color: "#cc0000",
+                    bgColor: "#ffcdd2",
+                    recommendation: "🏥 Срочно обратитесь к врачу! Требуется комплексное лечение"};
+            } else {
+                return {
+                    comment: "Ожирение III степени",
+                    color: "#990000",
+                    bgColor: "#b71c1c",
+                    fontColor: "white",
+                    recommendation: "🚨 КРИТИЧЕСКОЕ СОСТОЯНИЕ! Немедленно обратитесь к врачу!"};}}
+        function updateScaleMarker(bmi) {
+            let percent = Math.min(100, Math.max(0, (bmi / 50) * 100));
+            return `<div class="scale-marker" style="margin-left: ${percent}%;"></div>`;}        
+        calcBtn.onclick = function() {
+            let height = Number(heightInput.value);
+            let weight = Number(weightInput.value);
+            if (heightInput.value === "" || weightInput.value === "") {
+                resultsDiv.innerHTML = `<div class="error">❌ Заполните все поля!</div>`;
+                return;}
+            if (isNaN(height) || isNaN(weight)) {
+                resultsDiv.innerHTML = `<div class="error">❌ Введите корректные числа!</div>`;
+                return;}
+            if (height < 50 || height > 250) {
+                resultsDiv.innerHTML = `<div class="error">❌ Рост должен быть от 50 до 250 см!</div>`;
+                return;}
+            if (weight < 10 || weight > 300) {
+                resultsDiv.innerHTML = `<div class="error">❌ Вес должен быть от 10 до 300 кг!</div>`;
+                return;}
+            let heightM = height / 100;
+            let bmi = weight / (heightM * heightM);
+            let bmiRounded = bmi.toFixed(2);
+            let category = getBMICategory(bmi);
+            let fontColor = category.fontColor || "#333";
+            resultsDiv.innerHTML = `
+                <div class="result-card" style="background-color: ${category.bgColor};">
+                    <div class="result-value" style="color: ${category.color};">
+                        ИМТ: ${bmiRounded}
+                    </div>
+                    <div class="result-comment" style="color: ${category.color};">
+                        ${category.comment}
+                    </div>
+                    <div class="bmi-scale">
+                        <div class="scale-bar">
+                            ${updateScaleMarker(bmi)}
+                        </div>
+                        <div class="scale-labels">
+                            <span>16</span>
+                            <span>18.5</span>
+                            <span>25</span>
+                            <span>30</span>
+                            <span>35</span>
+                            <span>40+</span>
+                        </div>
+                    </div>
+                    <div class="result-recommendation" style="color: ${fontColor};">
+                        💡 ${category.recommendation}
+                    </div>
+                    <div style="font-size: 12px; margin-top: 10px; color: #666;">
+                        📊 Ваш рост: ${height} см | Вес: ${weight} кг
+                    </div>
+                </div>`;};
+    </script>
+</body>
+</html>
