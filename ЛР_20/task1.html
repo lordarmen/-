@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 1 - Приветствие пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        
+        input, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Приветствие пользователя</h1>
+    
+    <input type="text" id="userName" placeholder="Введите ваше имя">
+    <br>
+    <button id="greetButton">Сказать привет</button>
+    
+    <p id="result"></p>
+    
+    <script>
+        // Получаем элементы
+        let input = document.querySelector('#userName');
+        let button = document.querySelector('#greetButton');
+        let resultParagraph = document.querySelector('#result');
+        
+        // Добавляем обработчик клика
+        button.onclick = function() {
+            let name = input.value; // Читаем имя из поля ввода
+            
+            if (name === "") {
+                resultParagraph.textContent = 'Вы не ввели имя';
+            } else {
+                resultParagraph.textContent = `Привет, ${name}! Добро пожаловать на сайт`;
+            }
+        };
+    </script>
+</body>
+</html>

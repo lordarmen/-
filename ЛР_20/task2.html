@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 2 - Калькулятор суммы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        
+        input, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        
+        input {
+            width: 200px;
+        }
+        
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0b7dda;
+        }
+        
+        #sumResult {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Калькулятор суммы</h1>
+    
+    <input type="number" id="number1" placeholder="Введите первое число">
+    <br>
+    <input type="number" id="number2" placeholder="Введите второе число">
+    <br>
+    <button id="sumButton">Сложить</button>
+    
+    <p id="sumResult"></p>
+    
+    <script>
+        // Получаем элементы
+        let num1Input = document.querySelector('#number1');
+        let num2Input = document.querySelector('#number2');
+        let sumButton = document.querySelector('#sumButton');
+        let resultParagraph = document.querySelector('#sumResult');
+        
+        // Добавляем обработчик клика
+        sumButton.onclick = function() {
+            let num1 = Number(num1Input.value); // Преобразуем строку в число
+            let num2 = Number(num2Input.value);
+            let sum = num1 + num2;
+            
+            resultParagraph.textContent = `Сумма = ${sum}`;
+        };
+    </script>
+</body>
+</html>

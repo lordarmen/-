@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 3 - Светофор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        
+        .traffic-light {
+            background-color: #333;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .light {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 15px;
+            background-color: #555;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .red-light {
+            background-color: #555;
+        }
+        
+        .yellow-light {
+            background-color: #555;
+        }
+        
+        .green-light {
+            background-color: #555;
+        }
+        
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-red {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .btn-yellow {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .btn-green {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .instructions {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Светофор</h1>
+    <p class="instructions">Нажмите на кнопку, чтобы зажечь соответствующий цвет</p>
+    
+    <div class="traffic-light">
+        <div class="light" id="redLight"></div>
+        <div class="light" id="yellowLight"></div>
+        <div class="light" id="greenLight"></div>
+    </div>
+    
+    <div>
+        <button class="btn-red" id="redButton">Красный</button>
+        <button class="btn-yellow" id="yellowButton">Жёлтый</button>
+        <button class="btn-green" id="greenButton">Зелёный</button>
+    </div>
+    
+    <script>
+        // Находим элементы кругов
+        let redLight = document.querySelector('#redLight');
+        let yellowLight = document.querySelector('#yellowLight');
+        let greenLight = document.querySelector('#greenLight');
+        
+        // Находим кнопки
+        let redButton = document.querySelector('#redButton');
+        let yellowButton = document.querySelector('#yellowButton');
+        let greenButton = document.querySelector('#greenButton');
+        
+        // Функция сброса цветов (делаем все круги серыми)
+        function resetColors() {
+            redLight.style.backgroundColor = '#555';
+            yellowLight.style.backgroundColor = '#555';
+            greenLight.style.backgroundColor = '#555';
+        }
+        
+        // Обработчик для красной кнопки
+        redButton.onclick = function() {
+            resetColors();           // Сначала сбрасываем все цвета
+            redLight.style.backgroundColor = '#f44336'; // Затем красим красный
+        };
+        
+        // Обработчик для жёлтой кнопки
+        yellowButton.onclick = function() {
+            resetColors();               // Сначала сбрасываем все цвета
+            yellowLight.style.backgroundColor = '#ffc107'; // Затем красим жёлтый
+        };
+        
+        // Обработчик для зелёной кнопки
+        greenButton.onclick = function() {
+            resetColors();              // Сначала сбрасываем все цвета
+            greenLight.style.backgroundColor = '#4caf50'; // Затем красим зелёный
+        };
+    </script>
+</body>
+</html>

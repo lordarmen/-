@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор случайного цвета фона</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;}
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);}
+        h1 {
+            color: #333;
+            margin-bottom: 20px;}
+        button {
+            font-size: 20px;
+            padding: 15px 30px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;}
+        button:hover {
+            transform: scale(1.05);
+            background-color: #555;}
+        button:active {
+            transform: scale(0.98);}
+        .color-info {
+            margin-top: 20px;
+            font-size: 18px;
+            font-family: monospace;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;}
+        .rgb-values {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Генератор случайного цвета</h1>
+        <button id="randomColorButton">Случайный фон</button>
+        <div class="color-info" id="colorDisplay">
+            rgb(255, 255, 255)
+        </div>
+        <p class="rgb-values">Каждый клик — новый случайный цвет!</p>
+    </div>
+    <script>
+        let button = document.querySelector('#randomColorButton');
+        let colorDisplay = document.querySelector('#colorDisplay');
+        button.onclick = function() {
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            let color = "rgb(" + r + "," + g + "," + b + ")";
+            document.body.style.backgroundColor = color;
+            colorDisplay.textContent = color;};
+    </script>
+</body>
+</html>
