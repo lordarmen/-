@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Блокировка поля</title>
+        <script>
+            function agreeForm(f) {
+                if (f.agree.checked) f.sumbit.disabled=0
+                else f.sumbit.disabled = 1
+            }
+            </script>
+    </head>
+    <body>
+        <form>
+            <p><textarea cols="30" rows="4" disabled>
+                Типовой договор
+                Отдаю свою душу, а взамен получаю здоровье и бессмертие
+                </textarea></p>
+                <p><input type="checkbox" name="agree" onclick="agreeForm(this.form)">
+                    Я согласан со всеми условиями</p>
+                    <p><input type="submit" name="submit" value="Далее" disabled></p>
+        </form>
+    </body>
+</html>
